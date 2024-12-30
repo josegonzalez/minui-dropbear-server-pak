@@ -32,7 +32,7 @@ make build
 
 ### daemon-mode
 
-To run dropbear in daemon mode, create a file named `daemon-mode` in the pak folder.
+By default, `dropbear` runs as a foreground process, terminating on app exit. To run `dropbear` in daemon mode, create a file named `daemon-mode` in the pak folder. This will turn the app into a toggle for `dropbear`.
 
 ### passwordless-root
 
