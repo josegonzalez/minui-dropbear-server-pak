@@ -15,18 +15,23 @@ service_on() {
         mv "$progdir/log/service.log" "$progdir/log/service.log.old"
     fi
 
-    echo "Forcing blank password on root user"
-    passwd -d root
+    chmod 0664 "$progdir/res/etc/passwd" "$progdir/res/etc/group"
+    chown root:root "$progdir/res/etc/passwd" "$progdir/res/etc/group"
+    mount -o bind "$progdir/res/etc/passwd" /etc/passwd
+    mount -o bind "$progdir/res/etc/group" /etc/group
 
-    trimui_password="$(cat "$progdir/password")"
+    trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
     if [ -n "$trimui_password" ]; then
-        echo "Creating trimui user with specified password"
-        # todo: implement me, useradd does not exist
+        echo "Overriding trimui password with specified password"
+    else
+        echo "Using default trimui password"
+        trimui_password="trimui"
     fi
+    # passwd -d trimui "$trimui_password"
+    # passwd -d root
 
     mkdir -p /etc/dropbear
     dropbear_bin="/mnt/SDCARD/System/bin/dropbear"
-    "$dropbear_bin" --help
     if [ -f "$progdir/passwordless-root" ]; then
         ("$dropbear_bin" -R -F -E -B >"$progdir/log/service.log" 2>&1 &) &
     else
@@ -35,6 +40,8 @@ service_on() {
 }
 
 service_off() {
+    umount /etc/passwd
+    umount /etc/group
     killall "$SERVICE_NAME"
 }
 
