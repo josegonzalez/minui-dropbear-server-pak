@@ -15,20 +15,38 @@ service_on() {
         mv "$progdir/log/service.log" "$progdir/log/service.log.old"
     fi
 
+    trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
+    # default password is trimui
+    # shellcheck disable=SC2016
+    trimui_password_hash='$1$xyz$4mAm0CgEQkOzH6K/ibOvO1'
+    if [ -n "$trimui_password" ]; then
+        # todo: implement me
+        echo "TODO: Overridie trimui password with specified password"
+    else
+        echo "Using default trimui password"
+    fi
+
+    # default is tina
+    # shellcheck disable=SC2016
+    root_password_hash='$1$xyz$aO9utGNHk.FAqgCQghNg/1'
+    if [ -f "$progdir/passwordless-root" ]; then
+        echo "Using passwordless root"
+        # shellcheck disable=SC2016
+        root_password_hash='$1$xyz$kjXWClpYD0.j9bPLUk/Ii.'
+    else
+        echo "Using default root password"
+    fi
+
+    if [ -f "$progdir/res/etc/passwd" ]; then
+        rm -f "$progdir/res/etc/passwd" || return 1
+    fi
+    cp "$progdir/res/etc/passwd.template" "$progdir/res/etc/passwd"
+    sed -i "s:ROOT_PASSWORD:$root_password_hash:g" "$progdir/res/etc/passwd"
+    sed -i "s:TRIMUI_PASSWORD:$trimui_password_hash:g" "$progdir/res/etc/passwd"
     chmod 0664 "$progdir/res/etc/passwd" "$progdir/res/etc/group"
     chown root:root "$progdir/res/etc/passwd" "$progdir/res/etc/group"
     mount -o bind "$progdir/res/etc/passwd" /etc/passwd
     mount -o bind "$progdir/res/etc/group" /etc/group
-
-    trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
-    if [ -n "$trimui_password" ]; then
-        echo "Overriding trimui password with specified password"
-    else
-        echo "Using default trimui password"
-        trimui_password="trimui"
-    fi
-    # passwd -d trimui "$trimui_password"
-    # passwd -d root
 
     mkdir -p /etc/dropbear
     dropbear_bin="/mnt/SDCARD/System/bin/dropbear"

@@ -28,16 +28,15 @@ make build
 ## Usage
 
 > [!NOTE]
-> Due to not knowing the default root password, only the login `trimui:onion` works at the moment.
+> The default credentials are:
+> `root:tina`
+> `trimui:trimui`
 
 ### daemon-mode
 
 By default, `dropbear` runs as a foreground process, terminating on app exit. To run `dropbear` in daemon mode, create a file named `daemon-mode` in the pak folder. This will turn the app into a toggle for `dropbear`.
 
 ### passwordless-root
-
-> [!WARNING]
-> This app currently removes the root password on the device completely when running in `passwordless-root` mode. The password is not subsequently reset.
 
 > [!NOTE]
 > TODO: Implement me. We need to somehow generate an empty string for a hash and template out the etc/passwd file before mounting it.
@@ -47,6 +46,6 @@ To allow access to the root user without specifying a password, create a file na
 ### password
 
 > [!NOTE]
-> TODO: Implement me. We need to somehow generate an empty string for a hash and template out the etc/passwd file before mounting it.
+> TODO: Implement me. We need to somehow generate a hash for the specified password and template out the etc/passwd file before mounting it.
 
-Creating a file named `password` will result in the contents of that file being used as the password for the `trimui` user. If not specified, the password is set to `onion`.
+Creating a file named `password` will result in the contents of that file being used as the password for the `trimui` user. If not specified, the password is set to `trimui`.
