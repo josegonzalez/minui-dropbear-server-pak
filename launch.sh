@@ -204,6 +204,7 @@ main() {
     fi
 }
 
+mkdir -p "$progdir/log"
 if [ -f "$progdir/log/launch.log" ]; then
     mv "$progdir/log/launch.log" "$progdir/log/launch.log.old"
 fi
