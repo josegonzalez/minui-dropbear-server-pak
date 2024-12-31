@@ -29,8 +29,9 @@ make build
 
 > [!NOTE]
 > The default credentials are:
-> `root:tina`
-> `trimui:trimui`
+>
+> - `root:tina`
+> - `trimui:trimui`
 
 ### daemon-mode
 
