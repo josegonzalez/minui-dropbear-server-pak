@@ -1,0 +1,5 @@
+{
+    "label": "SSH Server",
+    "launch": "launch.sh",
+    "description": "Manages the SSH Server"
+}
