@@ -40,12 +40,18 @@ service_on() {
     if [ -f "$progdir/res/etc/passwd" ]; then
         rm -f "$progdir/res/etc/passwd" || return 1
     fi
+
     cp "$progdir/res/etc/passwd.template" "$progdir/res/etc/passwd"
     sed -i "s:ROOT_PASSWORD:$root_password_hash:g" "$progdir/res/etc/passwd"
     sed -i "s:TRIMUI_PASSWORD:$trimui_password_hash:g" "$progdir/res/etc/passwd"
-    chmod 0664 "$progdir/res/etc/passwd" "$progdir/res/etc/group"
-    chown root:root "$progdir/res/etc/passwd" "$progdir/res/etc/group"
-    mount -o bind "$progdir/res/etc/passwd" /etc/passwd
+    sync --data "$progdir/res/etc/passwd"
+    # passwd_file="$progdir/res/etc/passwd"
+    passwd_file="$progdir/res/etc/passwd.default"
+
+    chmod 0664 "$passwd_file" "$progdir/res/etc/group"
+    chown root:root "$passwd_file" "$progdir/res/etc/group"
+
+    mount -o bind "$passwd_file" /etc/passwd
     mount -o bind "$progdir/res/etc/group" /etc/group
 
     mkdir -p /etc/dropbear
