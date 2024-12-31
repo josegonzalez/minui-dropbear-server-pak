@@ -8,9 +8,6 @@ A TrimUI Brick app wrapping [`dropbear`](https://matt.ucc.asn.au/dropbear/dropbe
 
 ## Building
 
-> [!NOTE]
-> TODO: Build this in docker. It currently uses the `dropbear` binary as distributed by the `Trimui_EX` project, but using that as a base isn't great.
-
 ```shell
 make build
 ```

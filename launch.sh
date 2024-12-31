@@ -49,7 +49,7 @@ service_on() {
     mount -o bind "$progdir/res/etc/group" /etc/group
 
     mkdir -p /etc/dropbear
-    dropbear_bin="/mnt/SDCARD/System/bin/dropbear"
+    dropbear_bin="$progdir/bin/$SERVICE_NAME"
     if [ -f "$progdir/passwordless-root" ]; then
         ("$dropbear_bin" -R -F -E -B >"$progdir/log/service.log" 2>&1 &) &
     else
