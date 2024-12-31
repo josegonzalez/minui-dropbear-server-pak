@@ -45,7 +45,7 @@ jobs:
           git archive --format=zip --output "dist/${{ steps.pak-name.outputs.PAK_NAME }}.pak.zip" HEAD
           while IFS= read -r line; do
             IFS=' ' read -r -a array <<< "$line"
-            git archive --format=zip --output "dist/${{ steps.pak-name.outputs.PAK_NAME }}.pak.zip" HEAD "${array[0]}"
+            zip -ur "dist/${{ steps.pak-name.outputs.PAK_NAME }}.pak.zip" "${array[0]}"
           done < .gitarchiveinclude
           ls -lah dist
 
