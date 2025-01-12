@@ -4,12 +4,12 @@ A TrimUI Brick app wrapping [`dropbear`](https://matt.ucc.asn.au/dropbear/dropbe
 
 ## Requirements
 
-- Rust (for building)
+- Docker (for building)
 
 ## Building
 
 ```shell
-make build
+make release
 ```
 
 ## Installation
