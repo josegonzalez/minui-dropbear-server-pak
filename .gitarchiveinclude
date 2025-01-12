@@ -1,2 +1,4 @@
 bin/evtest
 bin/dropbear
+bin/sdl2imgshow
+res/fonts/BPreplayBold.otf

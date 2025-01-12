@@ -4,4 +4,5 @@
 .gitignore export-ignore
 Dockerfile.evtest export-ignore
 Dockerfile.dropbear export-ignore
+Dockerfile.sdl2imgshow export-ignore
 Makefile export-ignore
