@@ -11,6 +11,7 @@ SERVICE_NAME="dropbear"
 HUMAN_READABLE_NAME="SSH Server"
 LAUNCHES_SCRIPT="false"
 NETWORK_PORT=22
+NETWORK_SCHEME="ssh"
 
 service_off() {
     umount /etc/passwd
@@ -147,7 +148,7 @@ get_ip_address() {
         return
     fi
 
-    echo "http://$ip_address:$NETWORK_PORT"
+    echo "$NETWORK_SCHEME://$ip_address:$NETWORK_PORT"
 }
 
 main_screen() {
