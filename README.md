@@ -34,14 +34,20 @@ The default credentials are:
 - `root:tina`
 - `trimui:trimui`
 
-### passwordless-root
+### Debug Logging
+
+To enable debug logging, create a file named `debug` in the pak folder. Logs will be written to the `$SDCARD_PATH/.userdata/$PLATFORM/logs/` folder.
+
+### Configuration
+
+#### passwordless-root
 
 > [!NOTE]
 > TODO: Implement me. We need to somehow generate an empty string for a hash and template out the etc/passwd file before mounting it.
 
 To allow access to the root user without specifying a password, create a file named `passwordless-root` in the pak folder.
 
-### password
+#### password
 
 > [!NOTE]
 > TODO: Implement me. We need to somehow generate a hash for the specified password and template out the etc/passwd file before mounting it.
