@@ -1,24 +1,23 @@
-# trimui-brick-dropbear-server.pak
+# minui-dropbear-server.pak
 
-A TrimUI Brick app wrapping [`dropbear`](https://matt.ucc.asn.au/dropbear/dropbear.html), an ssh server.
+A MinUI app wrapping [`dropbear`](https://matt.ucc.asn.au/dropbear/dropbear.html), an ssh server.
 
 ## Requirements
 
-- Docker (for building)
+This pak is designed and tested on the following MinUI Platforms and devices:
 
-## Building
+- `tg5040`: Trimui Brick (formerly `tg3040`), Trimui Smart Pro
+- `rg35xxplus`: RG-35XX Plus, RG-34XX, RG-35XX H, RG-35XX SP
 
-```shell
-make release
-```
+Use the correct platform for your device.
 
 ## Installation
 
 1. Mount your TrimUI Brick SD card.
 2. Download the latest release from Github. It will be named `SSH.Server.pak.zip`.
-3. Copy the zip file to `/Tools/tg5040/SSH Server.pak.zip`.
+3. Copy the zip file to `/Tools/$PLATFORM/SSH Server.pak.zip`.
 4. Extract the zip in place, then delete the zip file.
-5. Confirm that there is a `/Tools/tg5040/SSH Server.pak/launch.sh` file on your SD card.
+5. Confirm that there is a `/Tools/$PLATFORM/SSH Server.pak/launch.sh` file on your SD card.
 6. Unmount your SD Card and insert it into your TrimUI Brick.
 
 > [!NOTE]
@@ -31,10 +30,6 @@ make release
 >
 > - `root:tina`
 > - `trimui:trimui`
-
-### daemon-mode
-
-By default, `dropbear` runs as a foreground process, terminating on app exit. To run `dropbear` in daemon mode, create a file named `daemon-mode` in the pak folder. This will turn the app into a toggle for `dropbear`.
 
 ### passwordless-root
 
