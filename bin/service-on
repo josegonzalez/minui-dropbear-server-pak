@@ -51,6 +51,8 @@ main() {
     mount -o bind "$passwd_file" /etc/passwd
     mount -o bind "$progdir/res/etc/group" /etc/group
 
+    SERVICE_NAME="dropbear"
+
     mkdir -p /etc/dropbear
     dropbear_bin="$progdir/bin/$SERVICE_NAME"
     if [ -f "$progdir/passwordless-root" ]; then
