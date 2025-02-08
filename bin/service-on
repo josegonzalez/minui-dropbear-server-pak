@@ -8,9 +8,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$progdir/lib"
 
 main() {
     cd "$SDCARD_PATH" || exit 1
-    if [ -f "$LOGS_PATH/$PAK_NAME.service.log" ]; then
-        mv "$LOGS_PATH/$PAK_NAME.service.log" "$LOGS_PATH/$PAK_NAME.service.log.old"
-    fi
 
     trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
     # default password is trimui
@@ -56,9 +53,9 @@ main() {
     mkdir -p /etc/dropbear
     dropbear_bin="$progdir/bin/$SERVICE_NAME"
     if [ -f "$progdir/passwordless-root" ]; then
-        ("$dropbear_bin" -R -F -E -B >"$LOGS_PATH/$PAK_NAME.service.log" 2>&1 &) &
+        ("$dropbear_bin" -R -F -E -B >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
     else
-        ("$dropbear_bin" -R -F -E >"$LOGS_PATH/$PAK_NAME.service.log" 2>&1 &) &
+        ("$dropbear_bin" -R -F -E >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
     fi
 }
 
