@@ -7,7 +7,7 @@ PAK_NAME="$(basename "$progdir")"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$progdir/lib"
 
 main() {
-    cd "$SDCARD_PATH" || exit 1
+    cd "$SDCARD_PATH" || return 1
 
     trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
     # default password is trimui
