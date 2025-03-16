@@ -1,5 +1,21 @@
 {
     "label": "SSH Server",
     "launch": "launch.sh",
-    "description": "Manages the SSH Server"
+    "description": "Manages the SSH Server",
+    "platforms": [
+        "rg35xxplus",
+        "tg5040"
+    ],
+    "settings": [
+        {
+            "name": "Enable",
+            "options": ["false", "true"],
+            "selected": 0
+        },
+        {
+            "name": "Start on boot",
+            "options": ["false", "true"],
+            "selected": 0
+        }
+    ]
 }

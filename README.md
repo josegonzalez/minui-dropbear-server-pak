@@ -36,7 +36,7 @@ The default credentials are:
 
 ### Debug Logging
 
-To enable debug logging, create a file named `debug` in the `$SDCARD_PATH/.userdata/$PLATFORM/SSHServer` folder. Logs will be written to the `$SDCARD_PATH/.userdata/$PLATFORM/logs/` folder.
+To enable debug logging, create a file named `debug` in the `$SDCARD_PATH/.userdata/$PLATFORM/SSH Server` folder. Logs will be written to the `$SDCARD_PATH/.userdata/$PLATFORM/logs/` folder.
 
 ### Configuration
 
@@ -45,11 +45,11 @@ To enable debug logging, create a file named `debug` in the `$SDCARD_PATH/.userd
 > [!NOTE]
 > TODO: Implement me. We need to somehow generate an empty string for a hash and template out the etc/passwd file before mounting it.
 
-To allow access to the root user without specifying a password, create a file named `passwordless-root` in the pak folder.
+To allow access to the root user without specifying a password, create a file named `passwordless-root` in the `$SDCARD_PATH/.userdata/$PLATFORM/SSH Server` folder.
 
 #### password
 
 > [!NOTE]
 > TODO: Implement me. We need to somehow generate a hash for the specified password and template out the etc/passwd file before mounting it.
 
-Creating a file named `password` will result in the contents of that file being used as the password for the `trimui` user. If not specified, the password is set to `trimui`.
+Creating a file named `password` in the `$SDCARD_PATH/.userdata/$PLATFORM/SSH Server` folder will result in the contents of that file being used as the password for the `trimui` user. If not specified, the password is set to `trimui`.
