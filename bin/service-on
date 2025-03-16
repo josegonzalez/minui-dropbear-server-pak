@@ -1,15 +1,24 @@
 #!/bin/sh
-bindir="$(dirname "$0")"
-progdir="$(dirname "$bindir")"
-cd "$progdir" || exit 1
-[ -f "$USERDATA_PATH/SSHServer/debug" ] && set -x
-PAK_NAME="$(basename "$progdir")"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$progdir/lib"
+BIN_DIR="$(dirname "$0")"
+PAK_DIR="$(dirname "$BIN_DIR")"
+PAK_NAME="$(basename "$PAK_DIR")"
+PAK_NAME="${PAK_NAME%.*}"
+[ -f "$USERDATA_PATH/$PAK_NAME/debug" ] && set -x
+
+echo "$0" "$@"
+cd "$PAK_DIR" || exit 1
+
+architecture=arm
+if uname -m | grep -q '64'; then
+    architecture=arm64
+fi
+
+export PATH="$PAK_DIR/bin/$architecture:$PAK_DIR/bin/$PLATFORM:$PAK_DIR/bin:$PATH"
 
 main() {
     cd "$SDCARD_PATH" || return 1
 
-    trimui_password="$(cat "$progdir/password" 2>/dev/null || true)"
+    trimui_password="$(cat "$USERDATA_PATH/$PAK_NAME/password" 2>/dev/null || true)"
     # default password is trimui
     # shellcheck disable=SC2016
     trimui_password_hash='$1$xyz$4mAm0CgEQkOzH6K/ibOvO1'
@@ -23,7 +32,7 @@ main() {
     # default is tina
     # shellcheck disable=SC2016
     root_password_hash='$1$xyz$aO9utGNHk.FAqgCQghNg/1'
-    if [ -f "$progdir/passwordless-root" ]; then
+    if [ -f "$USERDATA_PATH/$PAK_NAME/passwordless-root" ]; then
         echo "Using passwordless root"
         # shellcheck disable=SC2016
         root_password_hash='$1$xyz$kjXWClpYD0.j9bPLUk/Ii.'
@@ -31,31 +40,28 @@ main() {
         echo "Using default root password"
     fi
 
-    if [ -f "$progdir/res/etc/passwd" ]; then
-        rm -f "$progdir/res/etc/passwd" || return 1
+    if [ -f "$USERDATA_PATH/$PAK_NAME/res/etc/passwd" ]; then
+        rm -f "$USERDATA_PATH/$PAK_NAME/res/etc/passwd" || return 1
     fi
 
-    cp "$progdir/res/etc/passwd.template" "$progdir/res/etc/passwd"
-    sed -i "s:ROOT_PASSWORD:$root_password_hash:g" "$progdir/res/etc/passwd"
-    sed -i "s:TRIMUI_PASSWORD:$trimui_password_hash:g" "$progdir/res/etc/passwd"
-    sync --data "$progdir/res/etc/passwd"
+    cp "$USERDATA_PATH/$PAK_NAME/res/etc/passwd.template" "$USERDATA_PATH/$PAK_NAME/res/etc/passwd"
+    sed -i "s:ROOT_PASSWORD:$root_password_hash:g" "$USERDATA_PATH/$PAK_NAME/res/etc/passwd"
+    sed -i "s:TRIMUI_PASSWORD:$trimui_password_hash:g" "$USERDATA_PATH/$PAK_NAME/res/etc/passwd"
+    sync --data "$USERDATA_PATH/$PAK_NAME/res/etc/passwd"
     # passwd_file="$progdir/res/etc/passwd"
-    passwd_file="$progdir/res/etc/passwd.default"
+    passwd_file="$USERDATA_PATH/$PAK_NAME/res/etc/passwd.default"
 
-    chmod 0664 "$passwd_file" "$progdir/res/etc/group"
-    chown root:root "$passwd_file" "$progdir/res/etc/group"
+    chmod 0664 "$passwd_file" "$USERDATA_PATH/$PAK_NAME/res/etc/group"
+    chown root:root "$passwd_file" "$USERDATA_PATH/$PAK_NAME/res/etc/group"
 
     mount -o bind "$passwd_file" /etc/passwd
-    mount -o bind "$progdir/res/etc/group" /etc/group
-
-    SERVICE_NAME="dropbear"
+    mount -o bind "$USERDATA_PATH/$PAK_NAME/res/etc/group" /etc/group
 
     mkdir -p /etc/dropbear
-    dropbear_bin="$progdir/bin/$SERVICE_NAME"
-    if [ -f "$progdir/passwordless-root" ]; then
-        ("$dropbear_bin" -R -F -E -B >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
+    if [ -f "$USERDATA_PATH/$PAK_NAME/passwordless-root" ]; then
+        (dropbear -R -F -E -B >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
     else
-        ("$dropbear_bin" -R -F -E >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
+        (dropbear -R -F -E >"$LOGS_PATH/$PAK_NAME.service.txt" 2>&1 &) &
     fi
 }
 
