@@ -1,5 +1,5 @@
 {
-  "name": "Dropbear SSH Server",
+  "name": "SSH Server",
   "type": "TOOL",
   "description": "Manages the Dropbear SSH Server",
   "author": "josegonzalez",
