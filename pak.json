@@ -1,14 +1,14 @@
 {
-    "name": "Dropbear SSH Server",
-    "type": "TOOL",
-    "description": "Manages the Dropbear SSH Server",
-    "author": "josegonzalez",
-    "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
-    "release_filename": "SSH.Server.pak.zip",
-    "platforms": [
-        "rg35xxplus",
-        "tg5040"
-    ],
-    "launch": "launch.sh",
-    "version": "latest"
+  "name": "Dropbear SSH Server",
+  "type": "TOOL",
+  "description": "Manages the Dropbear SSH Server",
+  "author": "josegonzalez",
+  "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
+  "release_filename": "SSH.Server.pak.zip",
+  "platforms": [
+    "rg35xxplus",
+    "tg5040"
+  ],
+  "launch": "launch.sh",
+  "version": "0.5.3"
 }
