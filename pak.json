@@ -6,6 +6,8 @@
   "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
   "release_filename": "SSH.Server.pak.zip",
   "platforms": [
+    "miyoomini",
+    "my282",
     "my355",
     "rg35xxplus",
     "tg5040"
