@@ -6,6 +6,7 @@ A MinUI app wrapping [`dropbear`](https://matt.ucc.asn.au/dropbear/dropbear.html
 
 This pak is designed and tested on the following MinUI Platforms and devices:
 
+- `my355`: Miyoo Flip
 - `tg5040`: Trimui Brick (formerly `tg3040`), Trimui Smart Pro
 - `rg35xxplus`: RG-35XX Plus, RG-34XX, RG-35XX H, RG-35XX SP
 
